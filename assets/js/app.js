@@ -21,13 +21,13 @@ $(document).ready(function(){
 
     $("#add-train").on("click", function() {
         event.preventDefault();
-        // Storing and retreiving new train data
+        // Storing and receiving new train data
         name = $("#train-name").val().trim();
         destination = $("#destination").val().trim();
         firstTrain = $("#first-train").val().trim();
         frequency = $("#frequency").val().trim();
 
-        // Pushing to database
+        // Pushing to the database
         database.ref().push({
             name: name,
             destination: destination,
@@ -43,7 +43,7 @@ $(document).ready(function(){
         var minAway;
         // Chang year so first train comes before now
         var firstTrainNew = moment(childSnapshot.val().firstTrain, "hh:mm").subtract(1, "years");
-        // Difference between the current and firstTrain
+        // Differences between the current and firstTrain
         var diffTime = moment().diff(moment(firstTrainNew), "minutes");
         var remainder = diffTime % childSnapshot.val().frequency;
         // Minutes until next train
@@ -64,7 +64,7 @@ $(document).ready(function(){
     });
 
     database.ref().orderByChild("dateAdded").limitToLast(1).on("child_added", function(snapshot) {
-        // Change the HTML to reflect
+        
         $("#name-display").html(snapshot.val().name);
         $("#email-display").html(snapshot.val().email);
         $("#age-display").html(snapshot.val().age);
